@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>TIFF → JPG 변환기</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>🖼️ TIFF → JPG 변환기</h2>
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
+            <label class="drop-area" for="file">
+            📂 파일을 여기로 드래그하거나 클릭하여 업로드
+            <input type="file" name="file" id="file" onchange="this.form.submit()" />
+            </label>
+
+        </form>
+    </div>
+</body>
+</html>
