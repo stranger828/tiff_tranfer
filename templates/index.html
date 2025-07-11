@@ -9,6 +9,8 @@
     <div class="container">
         <h2>🖼️ TIFF → JPG 변환기</h2>
 
+        <p id="status-message" class="status-message"></p>
+
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <ul class="messages">
@@ -19,13 +21,34 @@
         {% endif %}
         {% endwith %}
 
-        <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data" class="upload-form">
-            <label class="drop-area" for="file">
-            📂 파일을 여기로 드래그하거나 클릭하여 업로드
-            <input type="file" name="file" id="file" onchange="this.form.submit()" />
-            </label>
+        <div id="drop-area" class="drop-area">
+        📂 TIFF 파일을 여기로 드래그하거나 클릭하여 업로드
+            <br>(최대 20개)
+            <input type="file" id="fileElem" name="files" multiple style="display: none;" />
+        </div>
 
-        </form>
+        <!-- 📌 중복 파일 알림 모달 -->
+<div id="duplicate-modal" class="modal" style="display: none;">
+  <div class="modal-content">
+    <p>🔁 중복된 파일이 감지되었습니다:</p>
+    <ul id="duplicate-list"></ul>
+    <div class="modal-buttons">
+      <button id="overwriteBtn">덮어쓰기</button>
+      <button id="skipBtn">건너뛰기</button>
+      <button id="cancelBtn">취소</button>
     </div>
+  </div>
+</div>
+
+
+<ul id="file-list" class="file-list"></ul>
+
+        <div class="btn-group">
+            <button id="uploadBtn">파일 선택</button>
+            <button id="convertBtn">변환</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
